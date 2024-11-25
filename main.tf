@@ -26,8 +26,7 @@ resource "random_integer" "deployment_id_suffix" {
 resource "azurerm_resource_group" "rg" {
   name     = "rg-${var.class_name}-${var.student_name}-${var.environment}-${var.location}-${random_integer.deployment_id_suffix.result}"
   location = var.location
-
-  tags = local.tags
+  tags     = local.tags
 }
 
 // Virtual Network
@@ -36,7 +35,7 @@ resource "azurerm_virtual_network" "vnet" {
   address_space       = ["10.0.0.0/16"]
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
-  tags = local.tags
+  tags                = local.tags
 }
 
 // Subnet
@@ -50,24 +49,23 @@ resource "azurerm_subnet" "subnet" {
 
 // Storage Account
 resource "azurerm_storage_account" "sto" {
-  name                = "st${var.class_name}${var.student_name}${var.environment}${random_integer.deployment_id_suffix.result}"
-  resource_group_name = azurerm_resource_group.rg.name
-
+  name                     = "st${var.class_name}${var.student_name}${var.environment}${random_integer.deployment_id_suffix.result}"
+  resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
-  tags = local.tags
+  tags                     = local.tags
 }
 
 
 resource "azurerm_mssql_server" "mssql" {
-  name                         = "sjoshi39-sqlserver"
+  name                         = "sqlserver-${var.class_name}-${var.student_name}-${random_integer.deployment_id_suffix.result}"
   resource_group_name          = azurerm_resource_group.rg.name
   location                     = azurerm_resource_group.rg.location
   version                      = "12.0"
   administrator_login          = "admin"
   administrator_login_password = "admin1234!!"
-  tags = local.tags
+  tags                         = local.tags
 }
 
 resource "azurerm_mssql_database" "mssqldb" {
