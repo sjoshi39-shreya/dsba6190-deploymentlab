@@ -55,6 +55,11 @@ resource "azurerm_storage_account" "sto" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
   tags                     = local.tags
+  network_rules {
+    default_action             = "Deny"
+    virtual_network_subnet_ids = [azurerm_subnet.subnet.id]
+  }
+
 }
 
 
@@ -66,6 +71,10 @@ resource "azurerm_mssql_server" "mssql" {
   administrator_login          = "sjoshi39"
   administrator_login_password = "dsba6190!!"
   tags                         = local.tags
+  network_rules {
+    default_action             = "Deny"
+    virtual_network_subnet_ids = [azurerm_subnet.subnet.id]
+  }
 }
 
 resource "azurerm_mssql_database" "mssqldb" {
