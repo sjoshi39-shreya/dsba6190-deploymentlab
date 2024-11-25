@@ -71,10 +71,14 @@ resource "azurerm_mssql_server" "mssql" {
   administrator_login          = "sjoshi39"
   administrator_login_password = "dsba6190!!"
   tags                         = local.tags
-  network_rules {
-    default_action             = "Deny"
-    virtual_network_subnet_ids = [azurerm_subnet.subnet.id]
-  }
+}
+
+// Virtual Network Rule for SQL Server
+resource "azurerm_mssql_virtual_network_rule" "sql_vnet_rule" {
+  name                     = "vnetrule-${var.class_name}-${var.student_name}-${random_integer.deployment_id_suffix.result}"
+  server_id                = azurerm_mssql_server.mssql.id
+  subnet_id                = azurerm_subnet.subnet.id
+  ignore_missing_vnet_service_endpoint = false // Ensure Service Endpoint exists
 }
 
 resource "azurerm_mssql_database" "mssqldb" {
