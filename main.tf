@@ -24,8 +24,7 @@ resource "random_integer" "deployment_id_suffix" {
 
 // Resource Group
 resource "azurerm_resource_group" "rg" {
-  #name     = "rg-${var.class_name}-${var.student_name}-${var.environment}-${var.location}-${random_integer.deployment_id_suffix.result}"
-  name     = "rg-dsba6190-sjoshi39-dev-eastus-163"
+  name     = "rg-${var.class_name}-${var.student_name}-${var.environment}-${var.location}-${random_integer.deployment_id_suffix.result}"
   location = var.location
   tags     = local.tags
 }
