@@ -63,8 +63,8 @@ resource "azurerm_mssql_server" "mssql" {
   resource_group_name          = azurerm_resource_group.rg.name
   location                     = azurerm_resource_group.rg.location
   version                      = "12.0"
-  administrator_login          = "admin"
-  administrator_login_password = "admin1234!!"
+  administrator_login          = "sjoshi39"
+  administrator_login_password = "dsba6190!!"
   tags                         = local.tags
 }
 
